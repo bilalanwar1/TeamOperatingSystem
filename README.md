@@ -3,7 +3,8 @@
 Multi-tenant SaaS for small UAE real estate agencies. Agents log outreach and
 leads; managers get live dashboards — without WhatsApp daily reporting.
 
-See [PROJECT_BRIEF.md](./PROJECT_BRIEF.md) and [MODULE_ROADMAP.md](./MODULE_ROADMAP.md).
+See [PROJECT_BRIEF.md](./PROJECT_BRIEF.md), [MODULE_ROADMAP.md](./MODULE_ROADMAP.md),
+and [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Stack
 
@@ -20,7 +21,7 @@ Scaffolding is complete:
 - Supabase browser/server/middleware clients
 - Spine migration: `supabase/migrations/0001_init.sql`
 - Extensible folders: `lib/services`, `lib/integrations/*`, `lib/auth`
-- Cursor rules: `.cursor/rules/project.mdc`
+- Architecture rules: `docs/ARCHITECTURE.md`
 
 ## Setup
 

@@ -1,17 +1,14 @@
----
-description: Real Estate TeamOS — core architecture rules
-alwaysApply: true
----
-
-# Real Estate TeamOS — Cursor Project Rules
+# Real Estate TeamOS — Architecture Rules
 
 ## What this project is
+
 Multi-tenant SaaS for small UAE real estate agencies (3–25 agents) to replace
 manual WhatsApp daily reporting. Agents log outreach, leads, follow-ups.
 Managers see real-time dashboards, leaderboards, reports. See PROJECT_BRIEF.md
 for full product context — read it before starting any new module.
 
 ## Tech stack (do not deviate without asking)
+
 - Next.js 15 (App Router), TypeScript strict mode
 - Tailwind CSS + shadcn/ui components only (no other UI kit)
 - Supabase: Postgres + Auth + Storage, Row Level Security everywhere
@@ -58,6 +55,7 @@ for full product context — read it before starting any new module.
    creates it.** Never ship a table without RLS enabled.
 
 ## When building a new module
+
 1. State which phase/module this is (see MODULE_ROADMAP.md).
 2. If it needs a new table, write the migration first, including RLS.
 3. Write the service function(s) before the UI.
@@ -66,6 +64,7 @@ for full product context — read it before starting any new module.
 6. Do not touch other modules' files unless explicitly asked.
 
 ## What NOT to do
+
 - Don't introduce a new state management library (React state + Server
   Components/Actions is enough for this app's scale).
 - Don't add a new ORM — use the Supabase JS client directly.

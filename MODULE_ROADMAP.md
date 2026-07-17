@@ -1,7 +1,7 @@
 # Module Roadmap
 
-Work top to bottom. Each module = its own Cursor chat/session (new context),
-referencing this file + PROJECT_BRIEF.md. Don't start a module until the
+Work top to bottom. Finish one module at a time, referencing this file,
+PROJECT_BRIEF.md, and docs/ARCHITECTURE.md. Don't start a module until the
 previous one is working end-to-end (migrated, tested manually, committed).
 
 ## Phase 0 — Project setup
@@ -9,7 +9,7 @@ previous one is working end-to-end (migrated, tested manually, committed).
 - [x] Install shadcn/ui, init
 - [x] Wire `@supabase/supabase-js` + `@supabase/ssr` clients (create your
       Supabase project and paste keys into `.env.local`)
-- [x] Add `.cursor/rules/project.mdc`, `PROJECT_BRIEF.md`, this file to repo root
+- [x] Add `docs/ARCHITECTURE.md`, `PROJECT_BRIEF.md`, this file to repo root
 - [x] Set up `/supabase/migrations/0001_init.sql` with the spine tables
 - [x] Git init, first commit
 
@@ -17,10 +17,10 @@ previous one is working end-to-end (migrated, tested manually, committed).
 Build in this exact order — each depends on the previous:
 
 1. **Auth + multi-tenancy + roles**
-   - Cursor prompt: "Implement Supabase auth (email/password + magic link)
+   - Scope: Implement Supabase auth (email/password + magic link)
      for TeamOS. Set up the agencies/users/agency_members tables per
-     PROJECT_BRIEF.md and .cursor/rules. Add RLS so users only see rows for
-     their own agency_id. Add a hasRole() helper in lib/auth/roles.ts."
+     PROJECT_BRIEF.md and docs/ARCHITECTURE.md. Add RLS so users only see
+     rows for their own agency_id. Add a hasRole() helper in lib/auth/roles.ts.
 
 2. **Agency onboarding + invites**
    - "Build agency signup flow: create agency (name, slug), owner account,
