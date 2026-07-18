@@ -57,7 +57,78 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Next module
 
-**Phase 1 / Module 2 — Agency onboarding + invites**
+Phase 4 AI is complete. Next: **Phase 5 — Expansion** (portals / localization / billing when demanded).
+
+## Phase 4 (done)
+
+- Lead scoring → `ai_insights` (`lead_score`); UI at `/a/[slug]/ai`
+- Agents slipping weekly alert + manager email (`agent_slipping`)
+- Flag: `ai_insights` on Team page
+- Crons: `/api/cron/ai-lead-scores` (daily), `/api/cron/ai-agents-slipping` (Mon)
+- Migration: `0005_ai_insights.sql`
+
+## Phase 3 (done)
+
+- Webhook: `POST /api/webhooks/whatsapp` (+ Meta GET verify)
+- Shared insert: `insertOutreachEvent` / dashboard `logOutreach`
+- Feature flag: `whatsapp_module` on Team page
+- Migration: `0004_whatsapp_phone.sql`
+
+## Phase 2 (done)
+
+- Daily digest cron: `GET /api/cron/daily-digest` + `vercel.json` (02:00 UTC)
+- Insights: `/a/[slug]/insights` (trends + source conversion)
+- PWA: `manifest.ts`, icons, installable metadata
+
+## Module 8 (done)
+
+- Follow-ups on agent dashboard: due today + overdue
+- Complete clears `follow_up_date` + logs `followup_completed`
+- Set dates on lead create/edit (already in Module 4)
+- Service: `lib/services/followups.ts`
+
+## Module 7 (done)
+
+- `/a/[slug]/reports` — daily/weekly agency + per-agent summary
+- **Export CSV** — browser download only (no server storage)
+- Service: `lib/services/reports.ts`
+
+## Module 6 (done)
+
+- `/a/[slug]/leaderboard` — week/month + rank by messages/leads/closings
+- Sourced only from `activity_events`
+- Service: `lib/services/leaderboard.ts`
+
+## Module 5 (done)
+
+- `/a/[slug]/manager` — managers/owners only
+- Live activity feed from `activity_events`
+- Per-agent today/week outreach + leads + closed won
+- Charts: daily team outreach + per-agent bars (recharts)
+- Service: `lib/services/manager.ts`
+
+## Module 4 (done)
+
+- `/a/[slug]/leads` — list
+- `/a/[slug]/leads/new` — create
+- `/a/[slug]/leads/[id]` — edit (status/source/notes/follow-up)
+- Activity events: `lead_created`, `lead_status_changed`
+- Service: `lib/services/leads.ts`
+
+## Module 3 (done)
+
+- `/a/[slug]/dashboard` — agent daily dashboard
+- Outreach logger → `activity_events` (`outreach_logged`)
+- Today totals by channel (Dubai calendar day)
+- Service: `lib/services/activity.ts` (`logOutreach` reusable by WhatsApp later)
+
+## Module 2 (done)
+
+- `/onboarding` — create agency (owner via `create_agency` RPC)
+- `/a/[slug]/team` — invite teammates (manager+)
+- `/a/[slug]/join?token=` — accept invite + set password
+- Resend email when `RESEND_API_KEY` is set; otherwise shareable invite link
+- Migration: `supabase/migrations/0003_agency_onboarding_invites.sql`
 
 ## Module 1 (done)
 

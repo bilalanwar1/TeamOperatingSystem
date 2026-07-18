@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { requireMembership } from "@/lib/services/membership";
+import { hasRole } from "@/lib/auth/roles";
 
 type AgencyHomeProps = {
   params: Promise<{ agencySlug: string }>;
@@ -30,6 +31,7 @@ export default async function AgencyHomePage({ params }: AgencyHomeProps) {
   }
 
   const { agency, role, member } = membership.context;
+  const canManageTeam = hasRole(role, "manager");
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-4 px-6 py-12">
@@ -38,12 +40,64 @@ export default async function AgencyHomePage({ params }: AgencyHomeProps) {
       <p className="text-muted-foreground">
         Signed in as {member.email} · role: {role}
       </p>
-      <p className="text-sm text-muted-foreground">
-        Path: /a/{agency.slug}. Agent dashboard and outreach land in later modules.
-      </p>
-      <Link href="/account" className="text-sm underline underline-offset-4">
-        Account
-      </Link>
+      <div className="flex flex-wrap gap-4 text-sm">
+        <Link
+          href={`/a/${agency.slug}/dashboard`}
+          className="font-medium underline underline-offset-4"
+        >
+          Agent dashboard
+        </Link>
+        <Link
+          href={`/a/${agency.slug}/leads`}
+          className="underline underline-offset-4"
+        >
+          Leads
+        </Link>
+        <Link
+          href={`/a/${agency.slug}/leaderboard`}
+          className="underline underline-offset-4"
+        >
+          Leaderboard
+        </Link>
+        <Link
+          href={`/a/${agency.slug}/reports`}
+          className="underline underline-offset-4"
+        >
+          Reports
+        </Link>
+        {canManageTeam ? (
+          <>
+            <Link
+              href={`/a/${agency.slug}/manager`}
+              className="underline underline-offset-4"
+            >
+              Manager dashboard
+            </Link>
+            <Link
+              href={`/a/${agency.slug}/insights`}
+              className="underline underline-offset-4"
+            >
+              Insights
+            </Link>
+            <Link
+              href={`/a/${agency.slug}/ai`}
+              className="underline underline-offset-4"
+            >
+              AI insights
+            </Link>
+            <Link
+              href={`/a/${agency.slug}/team`}
+              className="underline underline-offset-4"
+            >
+              Team & invites
+            </Link>
+
+          </>
+        ) : null}
+        <Link href="/account" className="underline underline-offset-4">
+          Account
+        </Link>
+      </div>
     </main>
   );
 }

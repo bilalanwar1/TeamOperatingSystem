@@ -3,17 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import type { Database } from "@/types/database";
 
-const PUBLIC_PATHS = new Set([
-  "/",
-  "/login",
-  "/signup",
-  "/magic-link",
-]);
-
-function isPublicPath(pathname: string) {
-  if (PUBLIC_PATHS.has(pathname)) return true;
-  if (pathname.startsWith("/auth/callback")) return true;
-  return false;
+function isJoinPath(pathname: string) {
+  return /^\/a\/[^/]+\/join\/?$/.test(pathname);
 }
 
 function isAuthPage(pathname: string) {
@@ -27,6 +18,7 @@ function isAuthPage(pathname: string) {
 /**
  * Refreshes the auth session and enforces basic route gates.
  * Tenant role checks stay in the service layer (requireMembership).
+ * Join links (/a/[slug]/join) stay public so invitees can set a password.
  */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -61,10 +53,18 @@ export async function updateSession(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  if (!user && (pathname.startsWith("/a/") || pathname.startsWith("/account"))) {
+  const needsAuth =
+    pathname.startsWith("/account") ||
+    pathname.startsWith("/onboarding") ||
+    (pathname.startsWith("/a/") && !isJoinPath(pathname));
+
+  if (!user && needsAuth) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
-    loginUrl.searchParams.set("next", pathname);
+    loginUrl.searchParams.set(
+      "next",
+      `${pathname}${request.nextUrl.search}`,
+    );
     return NextResponse.redirect(loginUrl);
   }
 
@@ -73,13 +73,6 @@ export async function updateSession(request: NextRequest) {
     accountUrl.pathname = "/account";
     accountUrl.search = "";
     return NextResponse.redirect(accountUrl);
-  }
-
-  if (!user && !isPublicPath(pathname) && !pathname.startsWith("/auth/")) {
-    // Allow other public assets; unknown private paths redirect to login.
-    if (pathname.startsWith("/api/")) {
-      return supabaseResponse;
-    }
   }
 
   return supabaseResponse;

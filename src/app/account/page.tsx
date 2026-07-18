@@ -37,18 +37,25 @@ export default async function AccountPage() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Your agencies</CardTitle>
-          <CardDescription>
-            Multi-tenant access is gated by membership and RLS. Creating an
-            agency lands in Module 2.
-          </CardDescription>
+        <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0">
+          <div>
+            <CardTitle>Your agencies</CardTitle>
+            <CardDescription>
+              Path-based workspaces at /a/[slug].
+            </CardDescription>
+          </div>
+          <Link
+            href="/onboarding"
+            className="inline-flex h-8 shrink-0 items-center justify-center rounded-lg bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+          >
+            Create agency
+          </Link>
         </CardHeader>
         <CardContent>
           {agencies.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No agencies yet. After Module 2 onboarding, your workspaces will
-              appear here.
+              No agencies yet. Create one to become an owner and invite your
+              team.
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
