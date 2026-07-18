@@ -57,4 +57,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Next module
 
-**Phase 1 / Module 1 — Auth + multi-tenancy + roles**
+**Phase 1 / Module 2 — Agency onboarding + invites**
+
+## Module 1 (done)
+
+- `/login`, `/signup`, `/magic-link`
+- `/auth/callback` for email links
+- `/account` (session + agency list)
+- `/a/[slug]` gated by `requireMembership()` + RLS
+- Services: `lib/services/auth.ts`, `lib/services/membership.ts`
+- Migration: `supabase/migrations/0002_membership_read_policies.sql`

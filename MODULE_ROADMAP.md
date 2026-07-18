@@ -16,7 +16,7 @@ previous one is working end-to-end (migrated, tested manually, committed).
 ## Phase 1 — Spine + MVP (weeks 1–6)
 Build in this exact order — each depends on the previous:
 
-1. **Auth + multi-tenancy + roles**
+1. **Auth + multi-tenancy + roles** ✅
    - Scope: Implement Supabase auth (email/password + magic link)
      for TeamOS. Set up the agencies/users/agency_members tables per
      PROJECT_BRIEF.md and docs/ARCHITECTURE.md. Add RLS so users only see

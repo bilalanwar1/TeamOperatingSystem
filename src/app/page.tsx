@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export default function HomePage() {
+import { getCurrentUser } from "@/lib/services/auth";
+
+export default async function HomePage() {
+  const user = await getCurrentUser();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6">
       <div className="max-w-lg text-center">
@@ -8,19 +12,38 @@ export default function HomePage() {
           Real Estate TeamOS
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-          Phase 0 ready
+          Team operating system
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Next.js, shadcn/ui, Supabase clients, spine schema, and extensible
-          service folders are in place. Next: Module 1 — Auth + multi-tenancy.
+          Activity-first workspace for UAE real estate teams. Module 1: auth and
+          multi-tenant access.
         </p>
       </div>
-      <Link
-        href="/a/demo"
-        className="inline-flex h-8 items-center justify-center rounded-lg bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
-      >
-        Tenant route placeholder
-      </Link>
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        {user ? (
+          <Link
+            href="/account"
+            className="inline-flex h-8 items-center justify-center rounded-lg bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+          >
+            Go to account
+          </Link>
+        ) : (
+          <>
+            <Link
+              href="/login"
+              className="inline-flex h-8 items-center justify-center rounded-lg bg-primary px-3 text-sm font-medium text-primary-foreground hover:bg-primary/80"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/signup"
+              className="inline-flex h-8 items-center justify-center rounded-lg border px-3 text-sm font-medium hover:bg-muted"
+            >
+              Create account
+            </Link>
+          </>
+        )}
+      </div>
     </main>
   );
 }
